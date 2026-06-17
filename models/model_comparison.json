@@ -1,0 +1,34 @@
+[
+  {
+    "Model": "Logistic Regression",
+    "Model_label": "Logistic\nRegression",
+    "Accuracy": 0.745,
+    "Precision": 0.738,
+    "Recall": 0.7726,
+    "F1": 0.7549
+  },
+  {
+    "Model": "Decision Tree",
+    "Model_label": "Decision\nTree",
+    "Accuracy": 0.7316,
+    "Precision": 0.7178,
+    "Recall": 0.7776,
+    "F1": 0.7465
+  },
+  {
+    "Model": "K-Nearest Neighbors",
+    "Model_label": "K-Nearest\nNeighbors",
+    "Accuracy": 0.7354,
+    "Precision": 0.7182,
+    "Recall": 0.789,
+    "F1": 0.752
+  },
+  {
+    "Model": "Random Forest",
+    "Model_label": "Random\nForest",
+    "Accuracy": 0.7436,
+    "Precision": 0.7267,
+    "Recall": 0.794,
+    "F1": 0.7589
+  }
+]

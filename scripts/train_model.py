@@ -266,7 +266,8 @@ print("\nTop 5:\n", top5.round(4))
 print("\n" + "="*60)
 print(" STEP 10  —  Save model & metadata")
 print("="*60)
-joblib.dump(model, MODELS_DIR / "rf_model.joblib")
+# compress=3 keeps the file ~18 MB (well under GitHub's 25 MB web-upload limit)
+joblib.dump(model, MODELS_DIR / "rf_model.joblib", compress=3)
 with open(MODELS_DIR / "feature_names.json", "w") as f:
     json.dump(list(X.columns), f, indent=2)
 with open(MODELS_DIR / "metrics.json", "w") as f:
