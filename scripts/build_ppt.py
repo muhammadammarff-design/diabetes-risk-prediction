@@ -143,6 +143,19 @@ def note(slide, txt):
     nf = slide.notes_slide.notes_text_frame
     nf.text = txt
 
+def add_hyperlink_run(paragraph, text, url, color=RGBColor(0x0F, 0x76, 0x6E),
+                      bold=False, size=10, underline=True):
+    """Add a clickable hyperlink run to an existing paragraph."""
+    run = paragraph.add_run()
+    run.text = text
+    run.font.name = FONT
+    run.font.size = Pt(size)
+    run.font.bold = bold
+    run.font.color.rgb = color
+    run.font.underline = underline
+    run.hyperlink.address = url
+    return run
+
 
 # =====================================================================
 # SLIDE 1 - TITLE  (team info updated per reference)
@@ -176,9 +189,34 @@ text(s, Inches(7.5), Inches(5.7), Inches(5), Inches(0.3),
      "SEMESTER · DATE", size=10, bold=True, color=TEAL)
 text(s, Inches(7.5), Inches(6.05), Inches(5), Inches(0.4),
      "Semester 2  ·  2026", size=15, color=INK)
+
+# Hyperlinks section (cover page)
+hl_y = Inches(6.7)
+text(s, Inches(0.7), hl_y, Inches(12), Inches(0.3),
+     "RESOURCES", size=10, bold=True, color=TEAL)
+# Build a paragraph with mixed text + hyperlink runs
+tb = s.shapes.add_textbox(Inches(0.7), hl_y + Inches(0.30), Inches(12), Inches(0.35))
+tf = tb.text_frame
+tf.margin_left = tf.margin_right = Emu(0)
+tf.margin_top = tf.margin_bottom = Emu(0)
+tf.word_wrap = True
+p = tf.paragraphs[0]
+r1 = p.add_run(); r1.text = "GitHub:  "
+r1.font.name = FONT; r1.font.size = Pt(11); r1.font.bold = True
+r1.font.color.rgb = SLATE
+add_hyperlink_run(p, "https://github.com/muhammadammarff-design/diabetes-risk-prediction",
+                  "https://github.com/muhammadammarff-design/diabetes-risk-prediction",
+                  color=TEAL, bold=False, size=11, underline=True)
+r2 = p.add_run(); r2.text = "      ·      Live demo:  "
+r2.font.name = FONT; r2.font.size = Pt(11); r2.font.bold = True
+r2.font.color.rgb = SLATE
+add_hyperlink_run(p, "https://diabetesriskpredictions.streamlit.app/",
+                  "https://diabetesriskpredictions.streamlit.app/",
+                  color=TEAL, bold=False, size=11, underline=True)
+
 note(s,
     "Greet the audience. State project title, team and instructor. Keep brief — 30 seconds. "
-    "Move to the next slide.")
+    "Move to the next slide. The two links at the bottom are clickable in slideshow mode.")
 
 
 # =====================================================================
@@ -1078,10 +1116,33 @@ rect(s, thanks_x, Inches(6.45), thanks_w, Inches(0.32), TEAL,
 text(s, thanks_x, Inches(6.49), thanks_w, Inches(0.28),
      "Thank you  ·  Questions?", size=12, bold=True, color=WHITE,
      align=PP_ALIGN.CENTER)
+
+# Hyperlinks at the bottom (after Thank you bar)
+hl_y2 = Inches(6.85)
+tb = s.shapes.add_textbox(Inches(0.7), hl_y2, Inches(12), Inches(0.3))
+tf = tb.text_frame
+tf.margin_left = tf.margin_right = Emu(0)
+tf.margin_top = tf.margin_bottom = Emu(0)
+tf.word_wrap = True
+p = tf.paragraphs[0]
+p.alignment = PP_ALIGN.CENTER
+r1 = p.add_run(); r1.text = "Code  ·  "
+r1.font.name = FONT; r1.font.size = Pt(10); r1.font.bold = True
+r1.font.color.rgb = SLATE
+add_hyperlink_run(p, "github.com/muhammadammarff-design/diabetes-risk-prediction",
+                  "https://github.com/muhammadammarff-design/diabetes-risk-prediction",
+                  color=TEAL, bold=False, size=10, underline=True)
+r2 = p.add_run(); r2.text = "      ·      Live demo  ·  "
+r2.font.name = FONT; r2.font.size = Pt(10); r2.font.bold = True
+r2.font.color.rgb = SLATE
+add_hyperlink_run(p, "diabetesriskpredictions.streamlit.app",
+                  "https://diabetesriskpredictions.streamlit.app/",
+                  color=TEAL, bold=False, size=10, underline=True)
 note(s,
     "This is THE conclusion slide — 4 BIG metric badges at the top show results PROMINENTLY "
     "(this is what gets marks for 'how we show results'). Below them: conclusion bullets (left), "
-    "limitations (left), and likely Q&A (right). End with 'Thank you — any questions?'.")
+    "limitations (left), and likely Q&A (right). End with 'Thank you — any questions?'. "
+    "The two links at the bottom are clickable in slideshow mode.")
 
 
 # =====================================================================
