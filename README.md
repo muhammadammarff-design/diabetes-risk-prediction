@@ -1,46 +1,43 @@
-# 🩺 Diabetes Risk Prediction
+# Diabetes Risk Prediction
 
-A supervised machine-learning project that predicts diabetes risk from 21 patient health indicators (BRFSS 2015) using a **Random Forest** classifier — with an interactive **Streamlit** web app.
+A supervised machine-learning project that predicts diabetes risk from 21 BRFSS 2015 health indicators using a **Random Forest classifier** and an interactive **Streamlit** web app.
 
-> **Course:** Introduction to Data Science · **Semester:** 2  
-> **Group:** Ali Raza (2540010) · Muhammad Ammar (2540008) · Taha Ali (2540008)  
-> **Instructor:** Sir Zaki
+> Educational project only — this is not a medical diagnostic tool.
 
 ---
 
-## 📊 Results
+## Results
 
 | Metric | Value |
-|---|---|
-| Test accuracy | **74.36 %** |
+|---|---:|
+| Test accuracy | 74.36% |
 | Precision | 0.727 |
 | Recall | 0.794 |
-| F1 Score | **0.759** |
-| Records used  | 69,057 (after duplicate removal) |
-| Features      | 21 health indicators |
-| Top 5 risk factors | General Health · High BP · BMI · Age · High Cholesterol |
+| F1 score | 0.759 |
+| Clean records used | 69,057 |
+| Input features | 21 |
 
-4 models compared: Logistic Regression (74.5% acc), Decision Tree (73.2%), KNN (73.5%), **Random Forest (74.4%, best F1)**
+Top learned risk factors: **General Health**, **High Blood Pressure**, **BMI**, **Age**, and **High Cholesterol**.
 
 ---
 
-## 📁 Project Structure
+## Project structure
 
-```
-Diabetes_Project/
+```text
+diabetes-risk-prediction/
 ├── app/
-│   └── streamlit_app.py          # interactive Streamlit web app
+│   └── streamlit_app.py
 ├── data/
 │   └── diabetes_binary_5050split_health_indicators_BRFSS2015.csv
 ├── models/
-│   ├── rf_model.joblib           # trained Random Forest
 │   ├── feature_names.json
 │   ├── metrics.json
 │   ├── model_comparison.csv
-│   └── model_comparison.json
+│   ├── model_comparison.json
+│   └── rf_model.joblib
 ├── notebooks/
 │   └── diabetes_analysis.ipynb
-├── plots/                        # 8 publication-quality PNGs
+├── plots/
 │   ├── 01_class_balance.png
 │   ├── 02_bmi_distribution.png
 │   ├── 03_bmi_boxplot.png
@@ -50,104 +47,91 @@ Diabetes_Project/
 │   ├── 07_feature_importance.png
 │   └── 08_model_comparison.png
 ├── presentation/
-│   ├── Diabetes_Final_Presentation.pptx  # 17 slides, speaker notes
 │   ├── Diabetes_Final_Presentation.pdf
-│   ├── Diabetes_Project_Proposal.pptx
-│   └── Diabetes_Project_Proposal.pdf
+│   ├── Diabetes_Final_Presentation.pptx
+│   └── Diabetes_Project_Report.pdf
 ├── scripts/
-│   ├── train_model.py            # train RF + generate plots 01-07
-│   ├── compare_models.py         # compare 4 models, plot 08
-│   └── build_ppt_clean.py        # rebuild final PPT (no repair mode)
-├── docs/
-│   ├── Speaker_Notes.md          # full viva speaker notes
-│   ├── SETUP_GUIDE.md            # local + GitHub + Streamlit Cloud
-│   └── PROJECT_ROADMAP.md
+│   ├── compare_models.py
+│   └── train_model.py
+├── .streamlit/
+│   └── config.toml
+├── .gitignore
+├── README.md
 ├── requirements.txt
-├── runtime.txt
-└── README.md
+└── runtime.txt
 ```
+
+Only final project files are kept here. Duplicate reports, proposal drafts, reference screenshots, generated PowerPoint-building scripts, and the edited/missing-value duplicate CSV were removed from this GitHub-ready folder.
 
 ---
 
-## 🚀 Quick Start
-
-### 1. Clone & set up
+## Setup
 
 ```bash
 git clone https://github.com/<your-username>/diabetes-risk-prediction.git
 cd diabetes-risk-prediction
-python -m venv venv
-# Windows:
-venv\Scripts\activate
-# Mac / Linux:
-source venv/bin/activate
+python -m venv .venv
+
+# Windows
+.venv\Scripts\activate
+
+# macOS/Linux
+source .venv/bin/activate
+
 pip install -r requirements.txt
 ```
 
-### 2. Train the model
+---
+
+## Train the model
 
 ```bash
 python scripts/train_model.py
 ```
-Creates `models/rf_model.joblib`, metrics, and 7 PNG plots in `plots/`.
 
-### 3. Compare 4 models (optional)
+The training script performs these steps:
+
+1. Loads the CSV from `data/diabetes_binary_5050split_health_indicators_BRFSS2015.csv`.
+2. Validates the expected 22 columns.
+3. Cleans the dataset by dropping duplicates, removing missing/invalid rows, and fixing dtypes.
+4. Saves EDA/evaluation plots in `plots/`.
+5. Trains the Random Forest model.
+6. Saves model artifacts in `models/`.
+
+---
+
+## Compare models
 
 ```bash
 python scripts/compare_models.py
 ```
-Creates `plots/08_model_comparison.png` and `models/model_comparison.json`
 
-### 4. Launch the web app
+This compares Logistic Regression, Decision Tree, KNN, and Random Forest using the same cleaned data and same stratified train/test split.
+
+---
+
+## Run the Streamlit app
 
 ```bash
 streamlit run app/streamlit_app.py
 ```
-Open http://localhost:8501
 
-### 5. Rebuild the presentation
-
-```bash
-pip install python-pptx
-python scripts/build_ppt_clean.py
-```
-Output: `presentation/Diabetes_Final_Presentation.pptx` — 17 slides, speaker notes, 100% PowerPoint compatible (no repair prompt).
+Then open the local URL shown by Streamlit, usually: <http://localhost:8501>
 
 ---
 
-## 🧠 Methodology
+## Dataset
 
-| Phase | Step | Output |
-|---|---|---|
-| 01 | Data Collection | Load CSV (70,693 × 22) |
-| 02 | Data Cleaning   | Drop 1,636 duplicates → 69,057 rows |
-| 03 | EDA & Correlation | 5 EDA plots + heatmap |
-| 04 | Model Training  | Random Forest (200 trees, depth 15) |
-| 05 | Model Evaluation| Accuracy, Precision, Recall, F1, Confusion Matrix |
-| 06 | Feature Importance | Top-5 risk factors |
-| 07 | Deployment | Streamlit web app |
-
-**Why Random Forest?** Handles mixed types without scaling, built-in feature importance, robust to noisy survey data, best F1 score (0.759).
+CDC Behavioral Risk Factor Surveillance System (BRFSS) 2015 diabetes health indicators dataset, originally prepared by Alex Teboul on Kaggle.
 
 ---
 
-## 📚 Dataset
+## Main cleaning rule
 
-CDC Behavioral Risk Factor Surveillance System (BRFSS) 2015 — cleaned by Alex Teboul:  
-https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset
+The project uses the clean CSV from the Google Drive project folder. The code also includes defensive cleaning in `scripts/train_model.py` and the notebook:
 
----
-
-## 📖 Documentation
-
-- **Setup:** `docs/SETUP_GUIDE.md` — local install, GitHub push, Streamlit Cloud deploy
-- **Roadmap:** `docs/PROJECT_ROADMAP.md`
-- **Speaker Notes:** `docs/Speaker_Notes.md` — slide-by-slide viva script
-- Speaker notes are also embedded in the PPT (View → Notes Page)
-
----
-
-## ⚠️ Disclaimer
-
-Educational project only. Not a medical diagnostic tool. Consult a qualified healthcare professional.
-
+- duplicate rows are removed;
+- missing/edited cells are removed before dtype conversion;
+- binary/ordinal survey fields are converted to integers;
+- BMI is kept numeric;
+- out-of-range survey codes are rejected.
